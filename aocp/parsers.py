@@ -187,6 +187,19 @@ class SetParser(BaseIterableParser):
         return set(self._iterable_parse(string.strip(), self.splitter, self.subparser))
 
 
+class IntListParser(BaseIterableParser):
+    def __init__(self, base: int = 10):
+        """Initializes a parser which parses a string into a list of integers.
+
+        Args:
+            base (int, optional): The base to use when parsing the integers. Defaults to 10.
+        """
+        self.base = base
+
+    def parse(self, string: str) -> list[int]:
+        return self._find_integers(string, self.base)
+
+
 class TupleParser(BaseIterableParser):
     def __init__(
         self,
