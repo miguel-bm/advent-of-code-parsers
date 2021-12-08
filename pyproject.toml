@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aocp"
-version = "0.1.2"
+version = "0.1.3"
 description = "A collection of convenient parsers for Advent of Code problems."
 authors = ["Miguel Blanco Marcos <miguel.blanco.marcos@gmail.com>"]
 license = "MIT"
