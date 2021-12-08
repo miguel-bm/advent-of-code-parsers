@@ -46,7 +46,7 @@ class IntParser(BaseTransformParser):
 
     def parse(self, string: str) -> int:
         all_integers = self._find_integers(string)
-        return int(all_integers[0], self.base)
+        return int(str(all_integers[0]), self.base)
 
 
 class BoolParser(BaseTransformParser):
