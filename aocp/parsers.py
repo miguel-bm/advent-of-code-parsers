@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from collections.abc import Iterable
 from typing import Any, Callable, TypeVar, Sequence, Mapping, Union
+import parse
 
 X = TypeVar("X")
 
@@ -173,14 +174,39 @@ class TupleParser(BaseIterableParser):
             BaseAoCParser, Callable, Sequence[Union[BaseAoCParser, Callable]]
         ] = None,
         splitter: Union[str, Sequence[str]] = None,
+        format: str = None,
         dataclass=None,
     ):
-        self.splitter = splitter
+        assert (format is None) or (
+            splitter is None
+        ), "Cannot specify both splitter and parse format"
         self.subparser = subparser or str
+        self.splitter = splitter
+        self.format = format
         self.dataclass = dataclass
 
+    def _format_parse(
+        format: str,
+        string: str,
+        subparser: Union[
+            BaseAoCParser, Callable, Sequence[Union[BaseAoCParser, Callable]]
+        ],
+    ) -> tuple:
+        sequence = parse.parse(format, string)
+        if isinstance(subparser, Iterable):
+            assert len(subparser) == len(
+                sequence
+            ), "Length of subparsers provided and resulting sequence must match"
+            return (p(s) for p, s in zip(sequence, subparser))
+        return (subparser(e) for e in sequence)
+
     def parse(self, string: str) -> tuple:
-        sequence = self._iterable_parse(string.strip(), self.splitter, self.subparser)
+        if self.format:
+            sequence = self._format_parse(self.format, string, self.subparser)
+        else:
+            sequence = self._iterable_parse(
+                string.strip(), self.splitter, self.subparser
+            )
         if self.dataclass:
             return self.dataclass(*sequence)
         return tuple(sequence)
