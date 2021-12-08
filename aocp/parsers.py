@@ -9,17 +9,6 @@ X = TypeVar("X")
 class BaseAoCParser(ABC):
     SPLITTER_PRIORITY = ["\n\n", "\n", "|", "->", ";", ",", " ", ":"]
 
-    @classmethod
-    def _decide_splitter(cls, string: str, priority: list[str] = None) -> str:
-        """
-        Returns the splitter that is most likely to be used in the string.
-        """
-        priority = priority or cls.SPLITTER_PRIORITY
-        for s in priority:
-            if s in string.strip():
-                return s
-        return None
-
     @abstractmethod
     def parse(self, string: str) -> Any:
         pass
@@ -113,6 +102,17 @@ class BaseIterableParser(BaseAoCParser):
     ):
         self.splitter = splitter
         self.subparser = subparser or str
+
+    @classmethod
+    def _decide_splitter(cls, string: str, priority: list[str] = None) -> str:
+        """
+        Returns the splitter that is most likely to be used in the string.
+        """
+        priority = priority or cls.SPLITTER_PRIORITY
+        for s in priority:
+            if s in string.strip():
+                return s
+        return None
 
     @classmethod
     def _split(
