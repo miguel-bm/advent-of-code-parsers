@@ -14,16 +14,16 @@ from aocp.parsers import (
 )
 
 __all__ = [
-    CustomTransform,
-    SortTransform,
-    MapTransform,
-    ReplaceTransform,
-    IntParser,
-    IntListParser,
-    BoolParser,
-    ChainParser,
-    ListParser,
-    SetParser,
-    TupleParser,
-    DictParser,
+    "CustomTransform",
+    "SortTransform",
+    "MapTransform",
+    "ReplaceTransform",
+    "IntParser",
+    "IntListParser",
+    "BoolParser",
+    "ChainParser",
+    "ListParser",
+    "SetParser",
+    "TupleParser",
+    "DictParser",
 ]
