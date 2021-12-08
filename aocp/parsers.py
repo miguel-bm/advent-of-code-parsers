@@ -2,12 +2,26 @@ from abc import ABC, abstractmethod
 from collections.abc import Iterable
 from typing import Any, Callable, TypeVar, Sequence, Mapping, Union
 import parse
+import re
 
 X = TypeVar("X")
 
 
 class BaseAoCParser(ABC):
     SPLITTER_PRIORITY = ["\n\n", "\n", "|", "->", ";", ",", " ", ":"]
+
+    @staticmethod
+    def _find_integers(string: str, base: int = 10) -> list[int]:
+        """Find all integers present in a string and return as a list.
+
+        Args:
+            string (str): The string to search for integers
+            base (int, optional): The base to use when interpreting integers. Defaults to 10.
+
+        Returns:
+            list[int]: A list of integers found in the string.
+        """
+        return [int(x, base) for x in re.findall(r"-?\d+", string)]
 
     @abstractmethod
     def parse(self, string: str) -> Any:
@@ -22,11 +36,17 @@ class BaseTransformParser(BaseAoCParser, ABC):
 
 
 class IntParser(BaseTransformParser):
-    def __init__(self, base: int = None):
-        self.base = base or 10
+    def __init__(self, base: int = 10):
+        """Initializes a parser which finds the first integer in a string.
+
+        Args:
+            base (int, optional): The base of the integers to parse. Defaults to 10.
+        """
+        self.base = base
 
     def parse(self, string: str) -> int:
-        return int(string, self.base)
+        all_integers = self._find_integers(string)
+        return int(all_integers[0], self.base)
 
 
 class BoolParser(BaseTransformParser):
