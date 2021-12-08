@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "aocp"
-version = "0.1.1"
+version = "0.1.2"
 description = "A collection of convenient parsers for Advent of Code problems."
 authors = ["Miguel Blanco Marcos <miguel.blanco.marcos@gmail.com>"]
 license = "MIT"
@@ -10,12 +10,14 @@ homepage = "https://github.com/miguel-bm/advent-of-code-parsers"
 keywords = ["advent of code", "adventofcode", "aoc", "aocp", "parser", "parsers"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
+python = "^3.8"
+parse = "^1.19.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^6.2.5"
 black = "^21.12b0"
 ipykernel = "^6.6.0"
+aocd = "^0.1"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
