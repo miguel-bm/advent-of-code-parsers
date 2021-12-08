@@ -1,9 +1,13 @@
 [tool.poetry]
 name = "aocp"
-version = "0.1.0"
+version = "0.1.1"
 description = "A collection of convenient parsers for Advent of Code problems."
-authors = ["Miguel Blanco Marcos"]
+authors = ["Miguel Blanco Marcos <miguel.blanco.marcos@gmail.com>"]
 license = "MIT"
+readme = "README.md"
+repository = "https://github.com/miguel-bm/advent-of-code-parsers"
+homepage = "https://github.com/miguel-bm/advent-of-code-parsers"
+keywords = ["advent of code", "adventofcode", "aoc", "aocp", "parser", "parsers"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
